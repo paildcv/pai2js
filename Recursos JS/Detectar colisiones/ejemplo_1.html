@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .rectangulo {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <h2>Estos elementos estan colisionando</h2>
+<div class="rectangulo" id="objeto1" style="top: 100px; left: 100px;"></div>
+<div class="rectangulo" id="objeto2" style="top: 150px; left: 150px;"></div>
+
+<script>
+  var objeto1 = document.getElementById('objeto1');
+  var objeto2 = document.getElementById('objeto2');
+
+  function detectarColision(objeto1, objeto2) {
+    var rect1 = objeto1.getBoundingClientRect();
+    var rect2 = objeto2.getBoundingClientRect();
+    
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+
+  function verificarColision() {
+    if (detectarColision(objeto1, objeto2)) {
+      console.log('¡Colisión detectada!');
+    } else {
+      console.log('Sin colisión.');
+    }
+  }
+
+  // Llamar a la función para verificar colisión
+  verificarColision();
+</script>
+</body>
+</html>

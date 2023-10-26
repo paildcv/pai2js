@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<form id="miFormulario">
+  <input type="text" id="nombre" placeholder="Nombre">
+  <input type="email" id="email" placeholder="Correo electrónico">
+  <button type="submit">Enviar</button>
+</form>
+<p id="mensaje"></p>
+
+<script>
+  var formulario = document.getElementById('miFormulario');
+  var mensaje = document.getElementById('mensaje');
+
+  formulario.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var nombre = document.getElementById('nombre').value;
+    var email = document.getElementById('email').value;
+
+    if (nombre && email) {
+      mensaje.textContent = 'Formulario enviado correctamente';
+    } else {
+      mensaje.textContent = 'Por favor, completa todos los campos';
+    }
+  });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .rectangulo {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Estos elementos colisionan al moverse con el mouse y se cuenta el total de colisiones</h2>
+<div class="rectangulo" id="objeto1" style="top: 100px; left: 100px; background-color: red;"></div>
+<div class="rectangulo" id="objeto2" style="top: 150px; left: 150px; background-color: blue;"></div>
+
+<p>Contador: <span id="contador">0</span></p>
+
+<script>
+  var objeto1 = document.getElementById('objeto1');
+  var objeto2 = document.getElementById('objeto2');
+  var offsetX1, offsetY1, offsetX2, offsetY2;
+  var dragging1 = false;
+  var dragging2 = false;
+  var contador = 0;
+  var yaColisiono = false;
+
+  objeto1.addEventListener('mousedown', function(event) {
+    offsetX1 = event.clientX - objeto1.getBoundingClientRect().left;
+    offsetY1 = event.clientY - objeto1.getBoundingClientRect().top;
+    dragging1 = true;
+  });
+
+  objeto2.addEventListener('mousedown', function(event) {
+    offsetX2 = event.clientX - objeto2.getBoundingClientRect().left;
+    offsetY2 = event.clientY - objeto2.getBoundingClientRect().top;
+    dragging2 = true;
+  });
+
+  document.addEventListener('mouseup', function() {
+    dragging1 = false;
+    dragging2 = false;
+    yaColisiono = false;
+  });
+
+  document.addEventListener('mousemove', function(event) {
+    if (dragging1) {
+      objeto1.style.left = (event.clientX - offsetX1) + 'px';
+      objeto1.style.top = (event.clientY - offsetY1) + 'px';
+      detenerArrastre(objeto1, objeto2);
+    }
+    if (dragging2) {
+      objeto2.style.left = (event.clientX - offsetX2) + 'px';
+      objeto2.style.top = (event.clientY - offsetY2) + 'px';
+      detenerArrastre(objeto1, objeto2);
+    }
+  });
+
+  function detenerArrastre(obj1, obj2) {
+    var colision = detectarColision(obj1, obj2);
+    cambiarColor(colision);
+    if (colision && !yaColisiono) {
+      incrementarContador();
+      yaColisiono = true;
+    }
+  }
+
+  function detectarColision(objeto1, objeto2) {
+    var rect1 = objeto1.getBoundingClientRect();
+    var rect2 = objeto2.getBoundingClientRect();
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+
+  function cambiarColor(colision) {
+    objeto1.style.backgroundColor = colision ? 'green' : 'red';
+    objeto2.style.backgroundColor = colision ? 'yellow' : 'blue';
+  }
+
+  function incrementarContador() {
+    contador++;
+    document.getElementById('contador').textContent = contador;
+  }
+</script>
+</body>
+</html>

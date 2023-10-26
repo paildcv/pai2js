@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<ul id="miLista">
+  <li>Elemento 1</li>
+  <li>Elemento 2</li>
+</ul>
+
+<button id="miBoton">Agregar Elemento</button>
+
+<script>
+  var boton = document.getElementById('miBoton');
+  var lista = document.getElementById('miLista');
+
+  boton.addEventListener('click', function() {
+    var nuevoElemento = document.createElement('li');
+    nuevoElemento.textContent = 'Nuevo Elemento';
+    lista.appendChild(nuevoElemento);
+  });
+</script>
+</body>
+</html>

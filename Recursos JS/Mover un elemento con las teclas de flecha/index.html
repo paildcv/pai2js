@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .elemento {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+<div class="elemento"></div>
+<script>
+  var elemento = document.querySelector(".elemento");
+  var posX = 0;
+  var posY = 0;
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "ArrowRight") {
+      posX += 10;
+    } else if (event.key === "ArrowLeft") {
+      posX -= 10;
+    } else if (event.key === "ArrowDown") {
+      posY += 10;
+    } else if (event.key === "ArrowUp") {
+      posY -= 10;
+    }
+
+    elemento.style.left = posX + "px";
+    elemento.style.top = posY + "px";
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .elemento {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="elemento"></div>
+<script>
+  var elemento = document.querySelector(".elemento");
+  elemento.addEventListener("mouseover", function() {
+    elemento.style.backgroundColor = "green";
+  });
+
+  elemento.addEventListener("mouseout", function() {
+    elemento.style.backgroundColor = "red";
+  });
+</script>
+</body>
+</html>

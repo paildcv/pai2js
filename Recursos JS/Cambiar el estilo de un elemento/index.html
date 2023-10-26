@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<p id="miParrafo">¡Hola, mundo!</p>
+
+<button id="miBoton">Cambiar Estilo</button>
+
+<script>
+  var boton = document.getElementById('miBoton');
+  var parrafo = document.getElementById('miParrafo');
+
+  boton.addEventListener('click', function() {
+    parrafo.style.color = 'red';
+    parrafo.style.fontSize = '24px';
+  });
+</script>
+</body>
+</html>

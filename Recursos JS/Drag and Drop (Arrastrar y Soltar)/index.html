@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .rectangulo {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="rectangulo" id="objeto1" style="top: 100px; left: 100px; background-color: red;"></div>
+<div class="rectangulo" id="objeto2" style="top: 150px; left: 150px; background-color: blue;"></div>
+
+<script>
+  var objeto1 = document.getElementById('objeto1');
+  var objeto2 = document.getElementById('objeto2');
+  var offsetX1, offsetY1, offsetX2, offsetY2;
+  var dragging1 = false;
+  var dragging2 = false;
+
+  // Función para detectar colisión entre dos elementos
+  function detectarColision(objeto1, objeto2) {
+    var rect1 = objeto1.getBoundingClientRect();
+    var rect2 = objeto2.getBoundingClientRect();
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+
+  // Función para cambiar el color del objeto cuando hay colisión
+  function cambiarColor(colision) {
+    objeto1.style.backgroundColor = colision ? 'green' : 'red';
+    objeto2.style.backgroundColor = colision ? 'yellow' : 'blue';
+  }
+
+  // Función para iniciar el arrastre del objeto 1
+  function iniciarArrastre1(event) {
+    offsetX1 = event.clientX - objeto1.getBoundingClientRect().left;
+    offsetY1 = event.clientY - objeto1.getBoundingClientRect().top;
+    dragging1 = true;
+  }
+
+  // Función para iniciar el arrastre del objeto 2
+  function iniciarArrastre2(event) {
+    offsetX2 = event.clientX - objeto2.getBoundingClientRect().left;
+    offsetY2 = event.clientY - objeto2.getBoundingClientRect().top;
+    dragging2 = true;
+  }
+
+  // Función para detener el arrastre
+  function detenerArrastre() {
+    dragging1 = false;
+    dragging2 = false;
+    // Verificar colisión y cambiar el color al detener el arrastre
+    var colision = detectarColision(objeto1, objeto2);
+    cambiarColor(colision);
+  }
+
+  // Función para arrastrar el objeto 1
+  function arrastrarObjeto1(event) {
+    if (dragging1) {
+      objeto1.style.left = (event.clientX - offsetX1) + 'px';
+      objeto1.style.top = (event.clientY - offsetY1) + 'px';
+      // Verificar colisión y cambiar el color mientras se arrastra el objeto
+      var colision = detectarColision(objeto1, objeto2);
+      cambiarColor(colision);
+    }
+  }
+
+  // Función para arrastrar el objeto 2
+  function arrastrarObjeto2(event) {
+    if (dragging2) {
+      objeto2.style.left = (event.clientX - offsetX2) + 'px';
+      objeto2.style.top = (event.clientY - offsetY2) + 'px';
+      // Verificar colisión y cambiar el color mientras se arrastra el objeto
+      var colision = detectarColision(objeto1, objeto2);
+      cambiarColor(colision);
+    }
+  }
+
+  // Agregar event listeners para el arrastre de ambos objetos
+  objeto1.addEventListener('mousedown', iniciarArrastre1);
+  objeto2.addEventListener('mousedown', iniciarArrastre2);
+  document.addEventListener('mouseup', detenerArrastre);
+  document.addEventListener('mousemove', arrastrarObjeto1);
+  document.addEventListener('mousemove', arrastrarObjeto2);
+</script>
+</body>
+</html>

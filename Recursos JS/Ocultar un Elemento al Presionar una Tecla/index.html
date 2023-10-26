@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <h2>Se oculta el elemento al presionar la tecla H</h2>
+<div id="elementoParaOcultar" style="width: 100px; height: 100px; background-color: green;"></div>
+
+<script>
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'h') {
+      var elemento = document.getElementById('elementoParaOcultar');
+      elemento.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .rectangulo {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <h2>Estos elementos colisionan al moverse con las teclas uno de ellos</h2>
+<div class="rectangulo" id="objeto1" style="top: 100px; left: 100px; background-color: red;"></div>
+<div class="rectangulo" id="objeto2" style="top: 150px; left: 150px; background-color: blue;"></div>
+
+<script>
+  var objeto1 = document.getElementById('objeto1');
+  var objeto2 = document.getElementById('objeto2');
+
+  // Función para detectar colisión entre dos elementos
+  function detectarColision(objeto1, objeto2) {
+    var rect1 = objeto1.getBoundingClientRect();
+    var rect2 = objeto2.getBoundingClientRect();
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+
+  // Función para cambiar el color del objeto cuando hay colisión
+  function cambiarColor(colision) {
+    objeto1.style.backgroundColor = colision ? 'green' : 'red';
+    objeto2.style.backgroundColor = colision ? 'yellow' : 'blue';
+  }
+
+  // EventListener para las teclas de flecha
+  document.addEventListener('keydown', function(event) {
+    var step = 10;
+    if (event.key === 'ArrowUp') {
+      objeto1.style.top = (parseInt(objeto1.style.top) - step) + 'px';
+    } else if (event.key === 'ArrowDown') {
+      objeto1.style.top = (parseInt(objeto1.style.top) + step) + 'px';
+    } else if (event.key === 'ArrowLeft') {
+      objeto1.style.left = (parseInt(objeto1.style.left) - step) + 'px';
+    } else if (event.key === 'ArrowRight') {
+      objeto1.style.left = (parseInt(objeto1.style.left) + step) + 'px';
+    }
+
+    // Verificar colisión y cambiar el color
+    var colision = detectarColision(objeto1, objeto2);
+    cambiarColor(colision);
+  });
+</script>
+</body>
+</html>

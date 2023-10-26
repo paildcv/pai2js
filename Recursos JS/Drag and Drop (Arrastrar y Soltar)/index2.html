@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .rectangulo {
+      width: 250px;
+      height: 250px;
+      position: absolute;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="rectangulo" id="objeto1" style="top: 100px; left: 100px; background-color: red;"></div>
+<div class="rectangulo" id="objeto2" style="top: 150px; left: 150px; background-color: blue;"></div>
+
+<script>
+  var objeto1 = document.getElementById('objeto1');
+  var objeto2 = document.getElementById('objeto2');
+  var offsetX, offsetY;
+  var dragging = false;
+
+  // Función para detectar colisión entre dos elementos
+  function detectarColision(objeto1, objeto2) {
+    var rect1 = objeto1.getBoundingClientRect();
+    var rect2 = objeto2.getBoundingClientRect();
+    return !(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top || rect1.top > rect2.bottom);
+  }
+
+  // Función para cambiar el color del objeto cuando hay colisión
+  function cambiarColor(colision) {
+    objeto1.style.backgroundColor = colision ? 'green' : 'red';
+    objeto2.style.backgroundColor = colision ? 'yellow' : 'blue';
+  }
+
+  // Función para iniciar el arrastre
+  function iniciarArrastre(event) {
+    offsetX = event.clientX - objeto1.getBoundingClientRect().left;
+    offsetY = event.clientY - objeto1.getBoundingClientRect().top;
+    dragging = true;
+  }
+
+  // Función para detener el arrastre
+  function detenerArrastre() {
+    dragging = false;
+    // Verificar colisión y cambiar el color al detener el arrastre
+    var colision = detectarColision(objeto1, objeto2);
+    cambiarColor(colision);
+  }
+
+  // Función para arrastrar el objeto
+  function arrastrarObjeto(event) {
+    if (dragging) {
+      objeto1.style.left = (event.clientX - offsetX) + 'px';
+      objeto1.style.top = (event.clientY - offsetY) + 'px';
+      // Verificar colisión y cambiar el color mientras se arrastra el objeto
+      var colision = detectarColision(objeto1, objeto2);
+      cambiarColor(colision);
+    }
+  }
+
+  // Agregar event listeners para el arrastre
+  objeto1.addEventListener('mousedown', iniciarArrastre);
+  document.addEventListener('mouseup', detenerArrastre);
+  document.addEventListener('mousemove', arrastrarObjeto);
+</script>
+</body>
+</html>

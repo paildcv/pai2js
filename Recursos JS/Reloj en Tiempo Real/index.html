@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <h2>La hora en tiempo real</h2>
+<p id="reloj"></p>
+
+<script>
+  function actualizarReloj() {
+    var ahora = new Date();
+    var horas = ahora.getHours();
+    var minutos = ahora.getMinutes();
+    var segundos = ahora.getSeconds();
+
+    document.getElementById('reloj').textContent = horas + ':' + minutos + ':' + segundos;
+  }
+
+  setInterval(actualizarReloj, 1000);
+</script>
+</body>
+</html>
